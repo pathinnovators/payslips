@@ -4,103 +4,168 @@
 <head>
 
 <meta charset="UTF-8">
-<title>Bright Path Innovators Payroll Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<title>Bright Path Innovators Payroll Portal</title>
 
 <style>
 
+*{
+box-sizing:border-box;
+}
+
 body{
-font-family:Arial;
+font-family:Arial, sans-serif;
 background:#f4f6f9;
 margin:0;
 padding:0;
 }
 
+/* HEADER */
+
 .header{
-background:#1e2a38;
+background:#0047AB;
 color:white;
 text-align:center;
-padding:25px;
+padding:25px 15px;
 }
 
 .logo{
 width:90px;
+height:90px;
+border-radius:50%;
+object-fit:cover;
 margin-bottom:10px;
+border:4px solid white;
 }
 
 .company{
-font-size:26px;
+font-size:24px;
 font-weight:bold;
 }
 
 .portal{
-font-size:16px;
+font-size:15px;
 opacity:0.9;
 }
 
+/* MAIN CONTAINER */
+
 .container{
-width:420px;
-margin:60px auto;
+max-width:420px;
+width:92%;
+margin:40px auto;
 background:white;
-padding:30px;
+padding:25px;
 border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
+box-shadow:0 0 12px rgba(0,0,0,0.12);
 text-align:center;
 }
 
+.container h3{
+margin-bottom:15px;
+}
+
+/* INPUTS */
+
 input{
-width:95%;
+width:100%;
 padding:12px;
 margin:10px 0;
 border:1px solid #ccc;
 border-radius:6px;
+font-size:15px;
 }
+
+input[type="month"]{
+background:#fafafa;
+cursor:pointer;
+}
+
+/* BUTTON */
 
 button{
 width:100%;
 padding:12px;
-background:#2c3e50;
+background:#FF2F00;
 color:white;
 border:none;
 border-radius:6px;
-font-size:16px;
+font-size:18px;
 cursor:pointer;
+transition:0.3s;
 }
 
 button:hover{
-background:#34495e;
+background:#003580;
 }
+
+/* CAPTCHA */
 
 .captcha-box{
 display:flex;
 justify-content:center;
 align-items:center;
 gap:10px;
+margin-top:10px;
+flex-wrap:wrap;
 }
 
 .captcha{
-font-size:22px;
+font-size:20px;
 background:#eee;
-padding:10px 20px;
+padding:10px 18px;
 letter-spacing:4px;
 font-weight:bold;
+border-radius:5px;
 }
 
 .refresh{
 cursor:pointer;
-font-size:18px;
+font-size:20px;
 }
+
+/* RESULT */
 
 .result{
 margin-top:20px;
 }
+
+/* FOOTER */
 
 .footer{
 text-align:center;
 margin-top:40px;
 color:#777;
 font-size:13px;
+padding-bottom:20px;
+}
+
+/* MOBILE OPTIMIZATION */
+
+@media(max-width:480px){
+
+.logo{
+width:70px;
+height:70px;
+}
+
+.company{
+font-size:20px;
+}
+
+.portal{
+font-size:14px;
+}
+
+.container{
+padding:20px;
+}
+
+button{
+font-size:16px;
+}
+
 }
 
 </style>
@@ -129,8 +194,6 @@ Employee HR Payroll Portal
 
 <input type="text" id="empID" placeholder="Employee ID (Example: BPI-021)">
 
-<input type="email" id="email" placeholder="Enter Your Email">
-
 <input type="month" id="month">
 
 <div class="captcha-box">
@@ -140,11 +203,7 @@ Employee HR Payroll Portal
 
 <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
 
-<button onclick="sendOTP()">Send OTP</button>
-
-<input type="text" id="otpInput" placeholder="Enter OTP">
-
-<button onclick="verifyOTP()">Verify & View Payslip</button>
+<button onclick="getPayslip()">View Payslip</button>
 
 <div class="result" id="result"></div>
 
@@ -156,10 +215,7 @@ Employee HR Payroll Portal
 
 <script>
 
-emailjs.init("zzWOW2lsY5ChRSORm")
-
 let captchaCode=""
-let generatedOTP=""
 
 const payslips=[
 
@@ -224,18 +280,12 @@ document.getElementById("captcha").innerText=captchaCode
 
 generateCaptcha()
 
-function sendOTP(){
+function getPayslip(){
 
+let emp=document.getElementById("empID").value.trim()
+let month=document.getElementById("month").value
 let captchaInput=document.getElementById("captchaInput").value
-let email=document.getElementById("email").value
-let empid=document.getElementById("empID").value
-
-if(email==""){
-
-alert("Please enter email")
-return
-
-}
+let result=document.getElementById("result")
 
 if(captchaInput!==captchaCode){
 
@@ -245,59 +295,21 @@ return
 
 }
 
-generatedOTP=Math.floor(100000+Math.random()*900000)
-
-let params={
-empid:empid,
-otp:generatedOTP,
-to_email:email
-}
-
-emailjs.send("service_0aucna2","template_e3awo5b",params)
-
-.then(function(){
-
-alert("OTP Sent to your Email")
-
-})
-
-}
-
-function verifyOTP(){
-
-let enteredOTP=document.getElementById("otpInput").value
-let emp=document.getElementById("empID").value.trim()
-let month=document.getElementById("month").value
-let result=document.getElementById("result")
-
-if(generatedOTP==""){
-
-alert("Please request OTP first")
-return
-
-}
-
-if(enteredOTP!=generatedOTP){
-
-alert("Invalid OTP")
-return
-
-}
-
 let found=payslips.find(p=>p.id===emp && p.month===month)
 
 if(found){
 
-result.innerHTML=
-`<a href="${found.link}" target="_blank">
+result.innerHTML=`
+<a href="${found.link}" target="_blank">
 <button>Download Payslip</button>
-</a>`
+</a>
+`
 
 }
 
 else{
 
-result.innerHTML="<p style='color:red'>Payslip not found. Contact HR.</p>"
+result.innerHTML="<p style='color:red'>Payslip not found. Please contact HR.</p>"
 
 }
 
