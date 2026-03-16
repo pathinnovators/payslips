@@ -72,16 +72,28 @@ button:hover{
 background:#34495e;
 }
 
-.result{
-margin-top:20px;
+.captcha-box{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
 }
 
 .captcha{
 font-size:22px;
 background:#eee;
-padding:10px;
+padding:10px 20px;
 letter-spacing:4px;
-margin-top:10px;
+font-weight:bold;
+}
+
+.refresh{
+cursor:pointer;
+font-size:18px;
+}
+
+.result{
+margin-top:20px;
 }
 
 .footer{
@@ -121,7 +133,10 @@ Employee HR Payroll Portal
 
 <input type="month" id="month">
 
+<div class="captcha-box">
 <div class="captcha" id="captcha"></div>
+<div class="refresh" onclick="generateCaptcha()">🔄</div>
+</div>
 
 <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
 
@@ -143,8 +158,8 @@ Employee HR Payroll Portal
 
 emailjs.init("zzWOW2lsY5ChRSORm")
 
-let captchaCode
-let generatedOTP
+let captchaCode=""
+let generatedOTP=""
 
 const payslips=[
 
@@ -170,8 +185,7 @@ link:"https://drive.google.com/file/d/1KxKDBRdn0lLFAthVsy7n9Sc5wAfgNSpZ/view?usp
 id:"BPI-021",
 month:"2025-12",
 link:"https://drive.google.com/file/d/1aQpc-MhAiA51JbvNh5JjiqN4hrU0-sT8/view?usp=sharing"
-}
-
+},
 
 {
 id:"BPI-020",
@@ -195,7 +209,14 @@ link:"https://drive.google.com/file/d/1fuBlHPZXhpJ1UfuHf9iNs36XAx9DtR4z/view?usp
 
 function generateCaptcha(){
 
-captchaCode=Math.floor(1000+Math.random()*9000)
+const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+captchaCode=""
+
+for(let i=0;i<5;i++){
+
+captchaCode+=chars.charAt(Math.floor(Math.random()*chars.length))
+
+}
 
 document.getElementById("captcha").innerText=captchaCode
 
@@ -209,7 +230,14 @@ let captchaInput=document.getElementById("captchaInput").value
 let email=document.getElementById("email").value
 let empid=document.getElementById("empID").value
 
-if(captchaInput != captchaCode){
+if(email==""){
+
+alert("Please enter email")
+return
+
+}
+
+if(captchaInput!==captchaCode){
 
 alert("Incorrect CAPTCHA")
 generateCaptcha()
@@ -242,7 +270,14 @@ let emp=document.getElementById("empID").value.trim()
 let month=document.getElementById("month").value
 let result=document.getElementById("result")
 
-if(enteredOTP != generatedOTP){
+if(generatedOTP==""){
+
+alert("Please request OTP first")
+return
+
+}
+
+if(enteredOTP!=generatedOTP){
 
 alert("Invalid OTP")
 return
