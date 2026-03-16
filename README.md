@@ -147,7 +147,7 @@ link:"https://drive.google.com/file/d/FILEID1/view"
 {
 id:"BPI-011",
 month:"2025-12",
-link:"https://drive.google.com/file/d/FILEID2/view"
+link:"https://drive.google.com/file/d/1tYf3Zn0vO8PlsaiAAOqkkVLp62uGw_BA/view?usp=drive_link"
 },
 
 {
