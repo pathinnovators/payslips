@@ -4,8 +4,11 @@ Payslips access for Employees of Bright Path Innovators Pvt Ltd
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <title>Bright Path Innovators Payroll Portal</title>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
 <style>
 
@@ -114,7 +117,9 @@ Employee HR Payroll Portal
 
 <h3>Access Your Payslip</h3>
 
-<input type="text" id="empID" placeholder="Enter Employee ID (Example: BPI-021)">
+<input type="text" id="empID" placeholder="Employee ID (Example: BPI-021)">
+
+<input type="email" id="email" placeholder="Enter Your Email">
 
 <input type="month" id="month">
 
@@ -122,7 +127,11 @@ Employee HR Payroll Portal
 
 <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
 
-<button onclick="getPayslip()">View Payslip</button>
+<button onclick="sendOTP()">Send OTP</button>
+
+<input type="text" id="otpInput" placeholder="Enter OTP">
+
+<button onclick="verifyOTP()">Verify & View Payslip</button>
 
 <div class="result" id="result"></div>
 
@@ -134,38 +143,42 @@ Employee HR Payroll Portal
 
 <script>
 
-let captchaCode;
+emailjs.init("zzWOW2lsY5ChRSORm")
+
+let captchaCode
+let generatedOTP
 
 const payslips=[
 
 {
 id:"BPI-006",
 month:"2025-12",
-link:"https://drive.google.com/file/d/FILEID1/view"
+link:"https://drive.google.com/file/d/1qnd22RWqa5TScqstUX1tgTAittIa_Kuz/view?usp=sharing"
 },
 
 {
 id:"BPI-011",
 month:"2025-12",
-link:"https://drive.google.com/file/d/1tYf3Zn0vO8PlsaiAAOqkkVLp62uGw_BA/view?usp=drive_link"
+link:"https://drive.google.com/file/d/1tYf3Zn0vO8PlsaiAAOqkkVLp62uGw_BA/view?usp=sharing"
 },
 
 {
 id:"BPI-019",
 month:"2025-12",
-link:"https://drive.google.com/file/d/FILEID3/view"
+link:"https://drive.google.com/file/d/1KxKDBRdn0lLFAthVsy7n9Sc5wAfgNSpZ/view?usp=sharing"
 },
 
 {
 id:"BPI-021",
 month:"2025-12",
 link:"https://drive.google.com/file/d/1aQpc-MhAiA51JbvNh5JjiqN4hrU0-sT8/view?usp=sharing"
-},
+}
+
 
 {
 id:"BPI-020",
 month:"2025-12",
-link:"https://drive.google.com/file/d/FILEID2/view"
+link:"https://drive.google.com/file/d/18w_RvULBb2Uld1KmMdtuv-OaJrq1iAvn/view?usp=sharing"
 },
 
 {
@@ -180,7 +193,7 @@ month:"2025-12",
 link:"https://drive.google.com/file/d/1fuBlHPZXhpJ1UfuHf9iNs36XAx9DtR4z/view?usp=sharing"
 }
 
-];
+]
 
 function generateCaptcha(){
 
@@ -192,19 +205,48 @@ document.getElementById("captcha").innerText=captchaCode
 
 generateCaptcha()
 
-function getPayslip(){
+function sendOTP(){
 
-let emp=document.getElementById("empID").value.trim()
-let month=document.getElementById("month").value
 let captchaInput=document.getElementById("captchaInput").value
-let result=document.getElementById("result")
+let email=document.getElementById("email").value
+let empid=document.getElementById("empID").value
 
 if(captchaInput != captchaCode){
 
 alert("Incorrect CAPTCHA")
-
 generateCaptcha()
+return
 
+}
+
+generatedOTP=Math.floor(100000+Math.random()*900000)
+
+let params={
+empid:empid,
+otp:generatedOTP,
+to_email:email
+}
+
+emailjs.send("service_0aucna2","template_e3awo5b",params)
+
+.then(function(){
+
+alert("OTP Sent to your Email")
+
+})
+
+}
+
+function verifyOTP(){
+
+let enteredOTP=document.getElementById("otpInput").value
+let emp=document.getElementById("empID").value.trim()
+let month=document.getElementById("month").value
+let result=document.getElementById("result")
+
+if(enteredOTP != generatedOTP){
+
+alert("Invalid OTP")
 return
 
 }
@@ -222,7 +264,7 @@ result.innerHTML=
 
 else{
 
-result.innerHTML="<p style='color:red'>Payslip not found. Please contact HR.</p>"
+result.innerHTML="<p style='color:red'>Payslip not found. Contact HR.</p>"
 
 }
 
