@@ -73,6 +73,14 @@ background:#34495e;
 margin-top:20px;
 }
 
+.captcha{
+font-size:22px;
+background:#eee;
+padding:10px;
+letter-spacing:4px;
+margin-top:10px;
+}
+
 .footer{
 text-align:center;
 margin-top:40px;
@@ -104,9 +112,13 @@ Employee HR Payroll Portal
 
 <h3>Access Your Payslip</h3>
 
-<input type="text" id="empID" placeholder="Enter Employee ID (Example: BPI-101)">
+<input type="text" id="empID" placeholder="Enter Employee ID (Example: BPI-021)">
 
 <input type="month" id="month">
+
+<div class="captcha" id="captcha"></div>
+
+<input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
 
 <button onclick="getPayslip()">View Payslip</button>
 
@@ -120,39 +132,80 @@ Employee HR Payroll Portal
 
 <script>
 
+let captchaCode;
+
 const payslips=[
 
 {
-id:"BPI-101",
-month:"2026-01",
+id:"BPI-006",
+month:"2025-12",
 link:"https://drive.google.com/file/d/FILEID1/view"
 },
 
 {
-id:"BPI-101",
-month:"2026-02",
+id:"BPI-011",
+month:"2025-12",
 link:"https://drive.google.com/file/d/FILEID2/view"
 },
 
 {
-id:"BPI-102",
-month:"2026-01",
+id:"BPI-019",
+month:"2025-12",
 link:"https://drive.google.com/file/d/FILEID3/view"
 },
 
 {
-id:"BPI-103",
-month:"2026-01",
-link:"https://drive.google.com/file/d/FILEID4/view"
+id:"BPI-021",
+month:"2025-12",
+link:"https://drive.google.com/file/d/1aQpc-MhAiA51JbvNh5JjiqN4hrU0-sT8/view?usp=sharing"
+},
+
+{
+id:"BPI-020",
+month:"2025-12",
+link:"https://drive.google.com/file/d/FILEID2/view"
+},
+
+{
+id:"BPI-024",
+month:"2025-12",
+link:"https://drive.google.com/file/d/1A24AflMMbR26hL0qa1PaDZXUsMM-RLeU/view?usp=sharing"
+},
+
+{
+id:"BPI-023",
+month:"2025-12",
+link:"https://drive.google.com/file/d/1fuBlHPZXhpJ1UfuHf9iNs36XAx9DtR4z/view?usp=sharing"
 }
 
 ];
+
+function generateCaptcha(){
+
+captchaCode=Math.floor(1000+Math.random()*9000)
+
+document.getElementById("captcha").innerText=captchaCode
+
+}
+
+generateCaptcha()
 
 function getPayslip(){
 
 let emp=document.getElementById("empID").value.trim()
 let month=document.getElementById("month").value
+let captchaInput=document.getElementById("captchaInput").value
 let result=document.getElementById("result")
+
+if(captchaInput != captchaCode){
+
+alert("Incorrect CAPTCHA")
+
+generateCaptcha()
+
+return
+
+}
 
 let found=payslips.find(p=>p.id===emp && p.month===month)
 
