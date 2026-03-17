@@ -1,171 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Bright Path Innovators Payroll Portal</title>
 
 <style>
 
-*{
-box-sizing:border-box;
-}
-
 body{
-font-family:Arial, sans-serif;
-background:#f4f6f9;
-margin:0;
-padding:0;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(135deg,#eef2f7,#dfe9f3);
+  margin:0;
 }
 
 /* HEADER */
-
 .header{
-background:#0047AB;
-color:white;
-text-align:center;
-padding:25px 15px;
+  background:#240357;
+  color:white;
+  text-align:center;
+  padding:25px;
 }
 
 .logo{
-width:90px;
-height:90px;
-border-radius:50%;
-object-fit:cover;
-margin-bottom:10px;
-border:4px solid white;
+  width:100px;
 }
 
 .company{
-font-size:24px;
-font-weight:bold;
+  font-size:30px;
+  font-weight:bold;
 }
 
 .portal{
-font-size:15px;
-opacity:0.9;
+  font-size:14px;
+  opacity:0.8;
 }
 
-/* MAIN CONTAINER */
-
+/* CARD */
 .container{
-max-width:420px;
-width:92%;
-margin:40px auto;
-background:white;
-padding:25px;
-border-radius:10px;
-box-shadow:0 0 12px rgba(0,0,0,0.12);
-text-align:center;
-}
-
-.container h3{
-margin-bottom:15px;
+  width:400px;
+  margin:60px auto;
+  background:white;
+  padding:30px;
+  border-radius:12px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.1);
+  text-align:center;
 }
 
 /* INPUTS */
-
 input{
-width:100%;
-padding:12px;
-margin:10px 0;
-border:1px solid #ccc;
-border-radius:6px;
-font-size:15px;
-}
-
-input[type="month"]{
-background:#fafafa;
-cursor:pointer;
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border:1px solid #ccc;
+  border-radius:8px;
+  font-size:14px;
 }
 
 /* BUTTON */
-
 button{
-width:100%;
-padding:12px;
-background:#FF2F00;
-color:white;
-border:none;
-border-radius:6px;
-font-size:18px;
-cursor:pointer;
-transition:0.3s;
+  width:100%;
+  padding:12px;
+  background:#d60d0d;
+  color:white;
+  border:none;
+  border-radius:8px;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s;
 }
 
 button:hover{
-background:#003580;
+  background:#34495e;
 }
 
 /* CAPTCHA */
-
 .captcha-box{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:10px;
-margin-top:10px;
-flex-wrap:wrap;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:10px;
 }
 
 .captcha{
-font-size:20px;
-background:#eee;
-padding:10px 18px;
-letter-spacing:4px;
-font-weight:bold;
-border-radius:5px;
+  background:#eee;
+  padding:10px 20px;
+  font-size:20px;
+  letter-spacing:3px;
+  border-radius:6px;
 }
 
 .refresh{
-cursor:pointer;
-font-size:20px;
+  cursor:pointer;
+  font-size:12px;
+  color:#3498db;
 }
 
 /* RESULT */
-
 .result{
-margin-top:20px;
+  margin-top:20px;
 }
 
 /* FOOTER */
-
 .footer{
-text-align:center;
-margin-top:40px;
-color:#777;
-font-size:13px;
-padding-bottom:20px;
-}
-
-/* MOBILE OPTIMIZATION */
-
-@media(max-width:480px){
-
-.logo{
-width:70px;
-height:70px;
-}
-
-.company{
-font-size:20px;
-}
-
-.portal{
-font-size:14px;
-}
-
-.container{
-padding:20px;
-}
-
-button{
-font-size:16px;
-}
-
+  text-align:center;
+  margin-top:40px;
+  color:#777;
+  font-size:13px;
 }
 
 </style>
@@ -175,35 +117,26 @@ font-size:16px;
 <body>
 
 <div class="header">
-
-<img src="logo.png" class="logo">
-
-<div class="company">
-Bright Path Innovators Pvt Ltd
-</div>
-
-<div class="portal">
-Employee HR Payroll Portal
-</div>
-
+  <img src="logo.png" class="logo">
+  <div class="company">Bright Path Innovators Pvt Ltd</div>
+  <div class="portal">Employee Payroll Portal</div>
 </div>
 
 <div class="container">
 
 <h3>Access Your Payslip</h3>
 
-<input type="text" id="empID" placeholder="Employee ID (Example: BPI-021)">
-
+<input type="text" id="empID" placeholder="Employee ID (Ex: BPI-021)">
 <input type="month" id="month">
 
 <div class="captcha-box">
-<div class="captcha" id="captcha"></div>
-<div class="refresh" onclick="generateCaptcha()">🔄</div>
+  <div class="captcha" id="captcha"></div>
+  <div class="refresh" onclick="generateCaptcha()">↻ Refresh</div>
 </div>
 
 <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
 
-<button onclick="getPayslip()">View Payslip</button>
+<button onclick="accessPayslip()">View Payslip</button>
 
 <div class="result" id="result"></div>
 
@@ -215,11 +148,19 @@ Employee HR Payroll Portal
 
 <script>
 
-let captchaCode=""
+/* CAPTCHA */
+let captchaCode;
 
-const payslips=[
+function generateCaptcha(){
+  captchaCode = Math.floor(1000 + Math.random() * 9000);
+  document.getElementById("captcha").innerText = captchaCode;
+}
 
-<!-- NOVEMBER 2025 -->
+generateCaptcha();
+
+/* PAYSLIP DATA */
+const payslips = [
+
 
 {
 id:"BPI-006",
@@ -394,58 +335,33 @@ link:"https://drive.google.com/file/d/15YtubF6gQ6UT384JBOW-LY-F0aF9iHrA/view?usp
 
 <!-- MARCH 2026 -->
 
+];
 
-]
+/* ACCESS FUNCTION */
+function accessPayslip(){
 
-function generateCaptcha(){
+  let emp = document.getElementById("empID").value.trim();
+  let month = document.getElementById("month").value;
+  let captchaInput = document.getElementById("captchaInput").value;
+  let result = document.getElementById("result");
 
-const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
-captchaCode=""
+  if(captchaInput != captchaCode){
+    alert("Incorrect CAPTCHA");
+    generateCaptcha();
+    return;
+  }
 
-for(let i=0;i<5;i++){
+  let found = payslips.find(p => p.id === emp && p.month === month);
 
-captchaCode+=chars.charAt(Math.floor(Math.random()*chars.length))
-
-}
-
-document.getElementById("captcha").innerText=captchaCode
-
-}
-
-generateCaptcha()
-
-function getPayslip(){
-
-let emp=document.getElementById("empID").value.trim()
-let month=document.getElementById("month").value
-let captchaInput=document.getElementById("captchaInput").value
-let result=document.getElementById("result")
-
-if(captchaInput!==captchaCode){
-
-alert("Incorrect CAPTCHA")
-generateCaptcha()
-return
-
-}
-
-let found=payslips.find(p=>p.id===emp && p.month===month)
-
-if(found){
-
-result.innerHTML=`
-<a href="${found.link}" target="_blank">
-<button>Download Payslip</button>
-</a>
-`
-
-}
-
-else{
-
-result.innerHTML="<p style='color:red'>Payslip not found. Please contact HR.</p>"
-
-}
+  if(found){
+    result.innerHTML = `
+      <a href="${found.link}" target="_blank">
+        <button>Download Payslip</button>
+      </a>
+    `;
+  } else {
+    result.innerHTML = "<p style='color:red'>Payslip not found. Contact HR.</p>";
+  }
 
 }
 
