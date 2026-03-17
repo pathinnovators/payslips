@@ -30,8 +30,8 @@ width:90px;
 height:90px;
 border-radius:50%;
 object-fit:cover;
-margin-bottom:10px;
 border:4px solid white;
+margin-bottom:10px;
 }
 
 .company{
@@ -106,6 +106,7 @@ font-size:18px;
 /* RESULT */
 .result{
 margin-top:20px;
+font-size:14px;
 }
 
 .footer{
@@ -131,7 +132,7 @@ font-size:13px;
 
 <h3>Access Your Payslip</h3>
 
-<input type="text" id="empID" placeholder="Employee ID (Example: BPI-021)">
+<input type="text" id="empID" placeholder="Employee ID (Example: BPI-019)">
 <input type="month" id="month">
 
 <div class="captcha-box">
@@ -153,63 +154,123 @@ font-size:13px;
 
 <script>
 
+/* CAPTCHA */
 let captchaCode="";
 
-/* CAPTCHA GENERATOR */
 function generateCaptcha(){
 const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 captchaCode="";
-
 for(let i=0;i<5;i++){
-captchaCode+=chars.charAt(Math.floor(Math.random()*chars.length));
+captchaCode+=chars[Math.floor(Math.random()*chars.length)];
 }
-
 document.getElementById("captcha").innerText=captchaCode;
 }
 
 generateCaptcha();
 
-/* PAYSLIP DATA (FIXED) */
-const payslips=[
+/* EMPLOYEE DATABASE (FIXED) */
+const payslips = [
 
-{ id:"BPI-006", month:"2025-11", link:"https://drive.google.com/file/d/1xqCvYPTOZWqA27TrcM7BNxZh8EUZkYjh/view" },
-{ id:"BPI-011", month:"2025-11", link:"https://drive.google.com/file/d/1AkTESX-ju6g3VDbf5aHXCghxwjwemdzt/view" },
+{
+id:"BPI-006",
+data:{
+"2025-11":"https://drive.google.com/file/d/1xqCvYPTOZWqA27TrcM7BNxZh8EUZkYjh/view",
+"2025-12":"https://drive.google.com/file/d/1NTBYF2NQi0G7WiqOK8TrU0XJKTKJz51R/view",
+"2026-01":"https://drive.google.com/file/d/1qnd22RWqa5TScqstUX1tgTAittIa_Kuz/view",
+"2026-02":"https://drive.google.com/file/d/1GrKOzxHk8iuH1hg9PitzTT4ojeP5yTlv/view"
+}
+},
 
-{ id:"BPI-006", month:"2025-12", link:"https://drive.google.com/file/d/1NTBYF2NQi0G7WiqOK8TrU0XJKTKJz51R/view" },
-{ id:"BPI-011", month:"2025-12", link:"https://drive.google.com/file/d/1qFB77gRm6D6r9JCz_s06wePbiCQ2jDdT/view" },
+{
+id:"BPI-011",
+data:{
+"2025-11":"https://drive.google.com/file/d/1AkTESX-ju6g3VDbf5aHXCghxwjwemdzt/view",
+"2025-12":"https://drive.google.com/file/d/1qFB77gRm6D6r9JCz_s06wePbiCQ2jDdT/view",
+"2026-01":"https://drive.google.com/file/d/1tYf3Zn0vO8PlsaiAAOqkkVLp62uGw_BA/view",
+"2026-02":"https://drive.google.com/file/d/13WAqiDIULTc_kDgxRRgFx_Y3lp9-d8w9/view"
+}
+},
 
-{ id:"BPI-006", month:"2026-01", link:"https://drive.google.com/file/d/1qnd22RWqa5TScqstUX1tgTAittIa_Kuz/view" },
-{ id:"BPI-011", month:"2026-01", link:"https://drive.google.com/file/d/1tYf3Zn0vO8PlsaiAAOqkkVLp62uGw_BA/view" },
+{
+id:"BPI-019",
+data:{
+"2025-11":"https://drive.google.com/file/d/19dT3eunNqPVeqhW5FCCAM-BrL6wYRKF_/view",
+"2025-12":"https://drive.google.com/file/d/1o6LmilGGVWoyn9tEWlN1XqC_q3SYxs6_/view",
+"2026-01":"https://drive.google.com/file/d/1KxKDBRdn0lLFAthVsy7n9Sc5wAfgNSpZ/view",
+"2026-02":"https://drive.google.com/file/d/1NtQm-9K27TyMg2mYNbHa3hmlyRy0YWHh/view"
+}
+},
 
-{ id:"BPI-006", month:"2026-02", link:"https://drive.google.com/file/d/1GrKOzxHk8iuH1hg9PitzTT4ojeP5yTlv/view" },
-{ id:"BPI-011", month:"2026-02", link:"https://drive.google.com/file/d/13WAqiDIULTc_kDgxRRgFx_Y3lp9-d8w9/view" }
+{
+id:"BPI-020",
+data:{
+"2025-11":"https://drive.google.com/file/d/1iRzYpyUOUDZqhTSAMRPzvk093TXx9GD_/view",
+"2025-12":"https://drive.google.com/file/d/1WnVJt-GjJCAUqNRJr2tuDg2Fy2LqK83S/view",
+"2026-01":"https://drive.google.com/file/d/18w_RvULBb2Uld1KmMdtuv-OaJrq1iAvn/view",
+"2026-02":"https://drive.google.com/file/d/1WMKoTcX2qRUYsiW1Jnk0Sn7BVu1kP31U/view"
+}
+},
+
+{
+id:"BPI-021",
+data:{
+"2025-12":"https://drive.google.com/file/d/1kco45N5fpY_oLiMilBH5zhi24bK7SqD2/view",
+"2026-01":"https://drive.google.com/file/d/1aQpc-MhAiA51JbvNh5JjiqN4hrU0-sT8/view",
+"2026-02":"https://drive.google.com/file/d/1pcQxsxyBReFGCAA5Ai9A3dRLlZAw2akH/view"
+}
+},
+
+{
+id:"BPI-024",
+data:{
+"2025-11":"https://drive.google.com/file/d/1X83yN_m2qhk_FdHenX9yOtiowk-GXfNu/view",
+"2025-12":"https://drive.google.com/file/d/1pHAX1B0alHp_ZwnVlPNcq6TCFdl0e7AV/view",
+"2026-01":"https://drive.google.com/file/d/1A24AflMMbR26hL0qa1PaDZXUsMM-RLeU/view",
+"2026-02":"https://drive.google.com/file/d/17O01k_qsqqttwOkd2aByNzwWC1a0zmWa/view"
+}
+},
+
+{
+id:"BPI-023",
+data:{
+"2025-11":"https://drive.google.com/file/d/1G45rxmVcUtDgq_M37Fo3h16G0YipXzfV/view",
+"2025-12":"https://drive.google.com/file/d/1JI4_RduUlwLqrJ07xZlo94M7mm72teTu/view",
+"2026-01":"https://drive.google.com/file/d/1fuBlHPZXhpJ1UfuHf9iNs36XAx9DtR4z/view",
+"2026-02":"https://drive.google.com/file/d/15YtubF6gQ6UT384JBOW-LY-F0aF9iHrA/view"
+}
+}
 
 ];
 
-/* ACCESS FUNCTION */
+/* FUNCTION */
 function getPayslip(){
 
-let emp=document.getElementById("empID").value.trim();
+let emp=document.getElementById("empID").value.trim().toUpperCase();
 let month=document.getElementById("month").value;
 let captchaInput=document.getElementById("captchaInput").value;
 let result=document.getElementById("result");
 
-if(captchaInput!==captchaCode){
+if(!emp || !month || !captchaInput){
+alert("Please fill all fields");
+return;
+}
+
+if(captchaInput !== captchaCode){
 alert("Incorrect CAPTCHA");
 generateCaptcha();
 return;
 }
 
-let found=payslips.find(p=>p.id===emp && p.month===month);
+let employee = payslips.find(e => e.id === emp);
 
-if(found){
+if(employee && employee.data[month]){
 result.innerHTML=`
-<a href="${found.link}" target="_blank">
+<a href="${employee.data[month]}" target="_blank" rel="noopener">
 <button>Download Payslip</button>
 </a>
 `;
 }else{
-result.innerHTML="<p style='color:red'>Payslip not found. Please contact HR.</p>";
+result.innerHTML="<p style='color:red'>Payslip not found. Contact HR.</p>";
 }
 
 }
