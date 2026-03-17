@@ -172,16 +172,12 @@ generateCaptcha();
 /* PAYSLIP DATA (FIXED) */
 const payslips=[
 
-/* NOVEMBER 2025 */
-
 { id:"BPI-006", month:"2025-11", link:"https://drive.google.com/file/d/1xqCvYPTOZWqA27TrcM7BNxZh8EUZkYjh/view?usp=sharing" },
 { id:"BPI-011", month:"2025-11", link:"https://drive.google.com/file/d/1AkTESX-ju6g3VDbf5aHXCghxwjwemdzt/view?usp=sharing" },
 { id:"BPI-019", month:"2025-11", link:"https://drive.google.com/file/d/19dT3eunNqPVeqhW5FCCAM-BrL6wYRKF_/view?usp=sharing" },
 { id:"BPI-020", month:"2025-11", link:"https://drive.google.com/file/d/1iRzYpyUOUDZqhTSAMRPzvk093TXx9GD_/view?usp=sharing" },
 { id:"BPI-024", month:"2025-11", link:"https://drive.google.com/file/d/1X83yN_m2qhk_FdHenX9yOtiowk-GXfNu/view?usp=sharing" },
 { id:"BPI-023", month:"2025-11", link:"https://drive.google.com/file/d/1G45rxmVcUtDgq_M37Fo3h16G0YipXzfV/view?usp=sharing" },
-
-/* DECEMBER 2025 */
 
 { id:"BPI-006", month:"2025-12", link:"https://drive.google.com/file/d/1NTBYF2NQi0G7WiqOK8TrU0XJKTKJz51R/view?usp=sharing" },
 { id:"BPI-011", month:"2025-12", link:"https://drive.google.com/file/d/1qFB77gRm6D6r9JCz_s06wePbiCQ2jDdT/view?usp=sharing" },
@@ -191,8 +187,6 @@ const payslips=[
 { id:"BPI-024", month:"2025-12", link:"https://drive.google.com/file/d/1pHAX1B0alHp_ZwnVlPNcq6TCFdl0e7AV/view?usp=sharing" },
 { id:"BPI-023", month:"2025-12", link:"https://drive.google.com/file/d/1JI4_RduUlwLqrJ07xZlo94M7mm72teTu/view?usp=sharing" },
 
-/* JANUARY 2026 */
-
 { id:"BPI-006", month:"2026-01", link:"https://drive.google.com/file/d/1qnd22RWqa5TScqstUX1tgTAittIa_Kuz/view?usp=sharing" },
 { id:"BPI-011", month:"2026-01", link:"https://drive.google.com/file/d/1tYf3Zn0vO8PlsaiAAOqkkVLp62uGw_BA/view?usp=sharing" },
 { id:"BPI-019", month:"2026-01", link:"https://drive.google.com/file/d/1KxKDBRdn0lLFAthVsy7n9Sc5wAfgNSpZ/view?usp=sharing" },
@@ -201,7 +195,6 @@ const payslips=[
 { id:"BPI-024", month:"2026-01", link:"https://drive.google.com/file/d/1A24AflMMbR26hL0qa1PaDZXUsMM-RLeU/view?usp=sharing" },
 { id:"BPI-023", month:"2026-01", link:"https://drive.google.com/file/d/1fuBlHPZXhpJ1UfuHf9iNs36XAx9DtR4z/view?usp=sharing" },
 
-/* FEBRAUARY 2026 */
 
 { id:"BPI-006", month:"2026-02", link:"https://drive.google.com/file/d/1GrKOzxHk8iuH1hg9PitzTT4ojeP5yTlv/view?usp=sharing" },
 { id:"BPI-011", month:"2026-02", link:"https://drive.google.com/file/d/13WAqiDIULTc_kDgxRRgFx_Y3lp9-d8w9/view?usp=sharing" }
@@ -211,7 +204,6 @@ const payslips=[
 { id:"BPI-024", month:"2026-02", link:"https://drive.google.com/file/d/17O01k_qsqqttwOkd2aByNzwWC1a0zmWa/view?usp=sharing" }
 { id:"BPI-023", month:"2026-02", link:"https://drive.google.com/file/d/15YtubF6gQ6UT384JBOW-LY-F0aF9iHrA/view?usp=sharing" },
 
-/* MARCH 2026 */
 
 ];
 
