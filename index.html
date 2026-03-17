@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+"<!DOCTYPE html> 
 <html lang="en">
 
 <head>
@@ -6,27 +6,29 @@
 <meta charset="UTF-8">
 <title>Bright Path Innovators Payroll Portal</title>
 
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
 <style>
 
 body{
-font-family:Arial;
+font-family:Arial, sans-serif;
 background:#f4f6f9;
 margin:0;
 padding:0;
 }
 
 .header{
-background:#1e2a38;
+background:#0047AB;
 color:white;
 text-align:center;
-padding:25px;
+padding:30px;
 }
 
 .logo{
-width:90px;
+width:100px;
+height:100px;
+border-radius:50%;
+object-fit:cover;
 margin-bottom:10px;
+border:4px solid white;
 }
 
 .company{
@@ -44,8 +46,8 @@ width:420px;
 margin:60px auto;
 background:white;
 padding:30px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
+border-radius:12px;
+box-shadow:0 0 12px rgba(0,0,0,0.12);
 text-align:center;
 }
 
@@ -55,33 +57,54 @@ padding:12px;
 margin:10px 0;
 border:1px solid #ccc;
 border-radius:6px;
+font-size:15px;
+}
+
+input[type="month"]{
+background:#fafafa;
+cursor:pointer;
 }
 
 button{
 width:100%;
 padding:12px;
-background:#2c3e50;
+background:#FF2F00;
 color:white;
 border:none;
 border-radius:6px;
-font-size:16px;
+font-size:20px;
 cursor:pointer;
+transition:0.3s;
 }
 
 button:hover{
-background:#34495e;
+background:#003580;
 }
 
-.result{
-margin-top:20px;
+.captcha-box{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+margin-top:10px;
 }
 
 .captcha{
 font-size:22px;
 background:#eee;
-padding:10px;
+padding:10px 20px;
 letter-spacing:4px;
-margin-top:10px;
+font-weight:bold;
+border-radius:5px;
+}
+
+.refresh{
+cursor:pointer;
+font-size:18px;
+}
+
+.result{
+margin-top:20px;
 }
 
 .footer{
@@ -117,19 +140,16 @@ Employee HR Payroll Portal
 
 <input type="text" id="empID" placeholder="Employee ID (Example: BPI-021)">
 
-<input type="email" id="email" placeholder="Enter Your Email">
-
 <input type="month" id="month">
 
+<div class="captcha-box">
 <div class="captcha" id="captcha"></div>
+<div class="refresh" onclick="generateCaptcha()">🔄</div>
+</div>
 
 <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
 
-<button onclick="sendOTP()">Send OTP</button>
-
-<input type="text" id="otpInput" placeholder="Enter OTP">
-
-<button onclick="verifyOTP()">Verify & View Payslip</button>
+<button onclick="getPayslip()">View Payslip</button>
 
 <div class="result" id="result"></div>
 
@@ -141,13 +161,9 @@ Employee HR Payroll Portal
 
 <script>
 
-emailjs.init("zzWOW2lsY5ChRSORm")
-
-let captchaCode
-let generatedOTP
+let captchaCode=""
 
 const payslips=[
-
 <!-- NOVEMBER 2025 -->
 
 {
@@ -324,11 +340,19 @@ link:"https://drive.google.com/file/d/15YtubF6gQ6UT384JBOW-LY-F0aF9iHrA/view?usp
 <!-- MARCH 2026 -->
 
 
+
 ]
 
 function generateCaptcha(){
 
-captchaCode=Math.floor(1000+Math.random()*9000)
+const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+captchaCode=""
+
+for(let i=0;i<5;i++){
+
+captchaCode+=chars.charAt(Math.floor(Math.random()*chars.length))
+
+}
 
 document.getElementById("captcha").innerText=captchaCode
 
@@ -336,48 +360,17 @@ document.getElementById("captcha").innerText=captchaCode
 
 generateCaptcha()
 
-function sendOTP(){
+function getPayslip(){
 
+let emp=document.getElementById("empID").value.trim()
+let month=document.getElementById("month").value
 let captchaInput=document.getElementById("captchaInput").value
-let email=document.getElementById("email").value
-let empid=document.getElementById("empID").value
+let result=document.getElementById("result")
 
-if(captchaInput != captchaCode){
+if(captchaInput!==captchaCode){
 
 alert("Incorrect CAPTCHA")
 generateCaptcha()
-return
-
-}
-
-generatedOTP=Math.floor(100000+Math.random()*900000)
-
-let params={
-empid:empid,
-otp:generatedOTP,
-to_email:email
-}
-
-emailjs.send("service_0aucna2","template_e3awo5b",params)
-
-.then(function(){
-
-alert("OTP Sent to your Email")
-
-})
-
-}
-
-function verifyOTP(){
-
-let enteredOTP=document.getElementById("otpInput").value
-let emp=document.getElementById("empID").value.trim()
-let month=document.getElementById("month").value
-let result=document.getElementById("result")
-
-if(enteredOTP != generatedOTP){
-
-alert("Invalid OTP")
 return
 
 }
@@ -387,15 +380,15 @@ let found=payslips.find(p=>p.id===emp && p.month===month)
 if(found){
 
 result.innerHTML=
-`<a href="${found.link}" target="_blank">
+<a href="${found.link}" target="_blank">
 <button>Download Payslip</button>
-</a>`
+</a>
 
 }
 
 else{
 
-result.innerHTML="<p style='color:red'>Payslip not found. Contact HR.</p>"
+result.innerHTML="<p style='color:red'>Payslip not found. Please contact HR.</p>"
 
 }
 
@@ -404,4 +397,4 @@ result.innerHTML="<p style='color:red'>Payslip not found. Contact HR.</p>"
 </script>
 
 </body>
-</html>
+</html>" rewrite this code to be compatible with both mobile and desktop view
