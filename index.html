@@ -1,12 +1,18 @@
-"<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Bright Path Innovators Payroll Portal</title>
 
 <style>
+
+*{
+box-sizing:border-box;
+}
 
 body{
 font-family:Arial, sans-serif;
@@ -15,16 +21,18 @@ margin:0;
 padding:0;
 }
 
+/* HEADER */
+
 .header{
 background:#0047AB;
 color:white;
 text-align:center;
-padding:30px;
+padding:25px 15px;
 }
 
 .logo{
-width:100px;
-height:100px;
+width:90px;
+height:90px;
 border-radius:50%;
 object-fit:cover;
 margin-bottom:10px;
@@ -32,27 +40,36 @@ border:4px solid white;
 }
 
 .company{
-font-size:26px;
+font-size:24px;
 font-weight:bold;
 }
 
 .portal{
-font-size:16px;
+font-size:15px;
 opacity:0.9;
 }
 
+/* MAIN CONTAINER */
+
 .container{
-width:420px;
-margin:60px auto;
+max-width:420px;
+width:92%;
+margin:40px auto;
 background:white;
-padding:30px;
-border-radius:12px;
+padding:25px;
+border-radius:10px;
 box-shadow:0 0 12px rgba(0,0,0,0.12);
 text-align:center;
 }
 
+.container h3{
+margin-bottom:15px;
+}
+
+/* INPUTS */
+
 input{
-width:95%;
+width:100%;
 padding:12px;
 margin:10px 0;
 border:1px solid #ccc;
@@ -65,6 +82,8 @@ background:#fafafa;
 cursor:pointer;
 }
 
+/* BUTTON */
+
 button{
 width:100%;
 padding:12px;
@@ -72,7 +91,7 @@ background:#FF2F00;
 color:white;
 border:none;
 border-radius:6px;
-font-size:20px;
+font-size:18px;
 cursor:pointer;
 transition:0.3s;
 }
@@ -81,18 +100,21 @@ button:hover{
 background:#003580;
 }
 
+/* CAPTCHA */
+
 .captcha-box{
 display:flex;
 justify-content:center;
 align-items:center;
 gap:10px;
 margin-top:10px;
+flex-wrap:wrap;
 }
 
 .captcha{
-font-size:22px;
+font-size:20px;
 background:#eee;
-padding:10px 20px;
+padding:10px 18px;
 letter-spacing:4px;
 font-weight:bold;
 border-radius:5px;
@@ -100,18 +122,50 @@ border-radius:5px;
 
 .refresh{
 cursor:pointer;
-font-size:18px;
+font-size:20px;
 }
+
+/* RESULT */
 
 .result{
 margin-top:20px;
 }
+
+/* FOOTER */
 
 .footer{
 text-align:center;
 margin-top:40px;
 color:#777;
 font-size:13px;
+padding-bottom:20px;
+}
+
+/* MOBILE OPTIMIZATION */
+
+@media(max-width:480px){
+
+.logo{
+width:70px;
+height:70px;
+}
+
+.company{
+font-size:20px;
+}
+
+.portal{
+font-size:14px;
+}
+
+.container{
+padding:20px;
+}
+
+button{
+font-size:16px;
+}
+
 }
 
 </style>
@@ -164,6 +218,7 @@ Employee HR Payroll Portal
 let captchaCode=""
 
 const payslips=[
+
 <!-- NOVEMBER 2025 -->
 
 {
@@ -340,7 +395,6 @@ link:"https://drive.google.com/file/d/15YtubF6gQ6UT384JBOW-LY-F0aF9iHrA/view?usp
 <!-- MARCH 2026 -->
 
 
-
 ]
 
 function generateCaptcha(){
@@ -379,10 +433,11 @@ let found=payslips.find(p=>p.id===emp && p.month===month)
 
 if(found){
 
-result.innerHTML=
+result.innerHTML=`
 <a href="${found.link}" target="_blank">
 <button>Download Payslip</button>
 </a>
+`
 
 }
 
@@ -397,4 +452,4 @@ result.innerHTML="<p style='color:red'>Payslip not found. Please contact HR.</p>
 </script>
 
 </body>
-</html>" rewrite this code to be compatible with both mobile and desktop view
+</html>
